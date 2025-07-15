@@ -1,0 +1,18 @@
+// Estilos personalizados adicionais (a maioria foi substituída pelo Bootstrap)
+
+// Ajustes específicos que não são cobertos pelo Bootstrap podem ser adicionados aqui
+.card {
+  transition: all 0.3s ease;
+}
+
+// Animação para o botão de mostrar/esconder
+.bi {
+  transition: all 0.2s ease;
+}
+
+// Ajustes para dispositivos móveis
+@media (max-width: 576px) {
+  .card {
+    margin: 0 15px;
+  }
+}

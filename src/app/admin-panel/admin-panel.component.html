@@ -1,0 +1,52 @@
+<div class="admin-panel-container">
+  <h1>Painel de Administração</h1>
+  
+  <div class="admin-section">
+    <h2>Configuração do Prompt</h2>
+    <p class="section-description">
+      Configure o template de prompt que será usado para gerar descrições de produtos.
+      Use as variáveis entre {{ '{' }} e {{ '}' }} para personalizar o prompt para cada produto.
+    </p>
+    
+    <div class="prompt-variables">
+      <h3>Variáveis disponíveis:</h3>
+      <ul>
+        <li><code>{{ '{productName}' }}</code> - Nome do produto</li>
+      </ul>
+    </div>
+    
+    <form [formGroup]="promptForm" (ngSubmit)="savePrompt()">
+      <div class="form-group">
+        <label for="promptTemplate">Template do Prompt:</label>
+        <textarea 
+          id="promptTemplate" 
+          formControlName="promptTemplate" 
+          rows="6" 
+          placeholder="Digite o template do prompt aqui..."
+        ></textarea>
+        <div *ngIf="promptForm.get('promptTemplate')?.invalid && promptForm.get('promptTemplate')?.touched" class="error-message">
+          O template do prompt é obrigatório.
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="reset-button" (click)="resetPrompt()">Restaurar Padrão</button>
+        <button type="submit" class="save-button" [disabled]="!promptForm.valid">Salvar</button>
+      </div>
+    </form>
+    
+    <div class="current-prompt-section">
+      <h3>Prompt Atual:</h3>
+      <div class="current-prompt">
+        <pre [innerText]="currentPrompt"></pre>
+      </div>
+    </div>
+  </div>
+  
+  <div class="flash-card success" *ngIf="showSuccessMessage" [@fadeInOut]>
+    <div class="flash-card-content">
+      <span class="icon">✓</span>
+      <span class="flash-message">Prompt salvo com sucesso!</span>
+    </div>
+  </div>
+</div>

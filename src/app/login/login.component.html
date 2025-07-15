@@ -1,0 +1,34 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo-container">
+      <img src="../../assets/logo-1.png" alt="Logo" class="logo">
+    </div>
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="username">Usuário</label>
+        <div class="input-wrapper">
+          <input id="username" type="text" formControlName="username" required placeholder="Digite seu usuário" [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          <span class="alert-icon" *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)">⚠️</span>
+        </div>
+        <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)" class="error-message-field">
+          É obrigatório inserir o nome de usuário
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="password">Senha</label>
+        <div class="input-wrapper">
+          <input id="password" type="password" formControlName="password" required placeholder="Digite sua senha" [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <span class="alert-icon" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">⚠️</span>
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)" class="error-message-field">
+          É obrigatório inserir a senha
+        </div>
+      </div>
+      <button type="submit" [disabled]="!loginForm.valid">Entrar</button>
+      <div *ngIf="loginError" class="error-message">
+        Usuário ou senha inválidos.
+      </div>
+    </form>
+  </div>
+</div>

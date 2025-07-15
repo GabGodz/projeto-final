@@ -1,0 +1,65 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 550px;">
+    <div class="text-center mb-4">
+      <img src="../../assets/logo-1.png" alt="Logo" class="img-fluid" style="height: 80px;">
+      <h2 class="mt-3 fw-bold">Bem-vindo ao Gerador de Descrições</h2>
+    </div>
+    
+    <div class="card-body">
+      <h3 class="text-center mb-3 fw-semibold">Configuração da API Gemini</h3>
+      <p class="text-muted text-center mb-4">Para utilizar o gerador de descrições, insira sua chave de API do Gemini abaixo:</p>
+      
+      <form [formGroup]="apiKeyForm" (ngSubmit)="saveApiKey()" class="mb-4">
+        <div class="mb-3">
+          <label for="apiKey" class="form-label fw-medium">Chave da API Gemini</label>
+          <div class="input-group">
+            <input 
+              id="apiKey" 
+              [type]="showApiKey ? 'text' : 'password'" 
+              class="form-control" 
+              formControlName="apiKey" 
+              required 
+              placeholder="Insira sua chave de API do Gemini"
+              [ngClass]="{'is-invalid': apiKeyForm.get('apiKey')?.invalid && apiKeyForm.get('apiKey')?.touched}">
+            <button 
+              class="btn btn-outline-secondary" 
+              type="button" 
+              (click)="toggleApiKeyVisibility()">
+              <i class="bi" [ngClass]="showApiKey ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </button>
+          </div>
+          <div *ngIf="apiKeyForm.get('apiKey')?.invalid && (apiKeyForm.get('apiKey')?.touched || apiKeyForm.get('apiKey')?.dirty)" class="invalid-feedback d-block">
+            A chave de API é obrigatória
+          </div>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+          <button type="button" class="btn btn-outline-primary me-md-2" (click)="testApiKey()" [disabled]="!apiKeyForm.valid">
+            <span *ngIf="isTestingApi" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            Testar API Key
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="!apiKeyForm.valid">
+            Salvar API Key
+          </button>
+        </div>
+      </form>
+      
+      <div *ngIf="apiKeyTestResult" class="alert" [ngClass]="apiKeyTestSuccess ? 'alert-success' : 'alert-danger'" role="alert">
+        <i class="bi" [ngClass]="apiKeyTestSuccess ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
+        {{ apiKeyTestResult }}
+      </div>
+      
+      <div *ngIf="apiKeySaved" class="alert alert-success text-center" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>Chave de API salva com sucesso!
+      </div>
+    </div>
+    
+    <div class="card-footer bg-transparent border-0 pt-2">
+      <div class="d-grid">
+        <button class="btn btn-success btn-lg" (click)="goToGenerator()" [disabled]="!apiKeySaved">
+          Continuar para o Gerador de Descrições
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

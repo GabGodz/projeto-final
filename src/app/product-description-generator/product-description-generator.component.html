@@ -1,0 +1,41 @@
+<div class="generator-container">
+  <h1>Gerador de Textos de Vendas</h1>
+  
+  <div class="generator-form-container">
+    <form [formGroup]="productForm" (ngSubmit)="generateDescription()">
+      <div class="form-group">
+        <label for="productDescription">Descrição do Produto</label>
+        <textarea 
+          id="productDescription" 
+          formControlName="productDescription" 
+          rows="6" 
+          placeholder="Descreva seu produto com o máximo de detalhes possível. Inclua características, funcionalidades, público-alvo e qualquer outra informação relevante."
+        ></textarea>
+        <div *ngIf="productForm.get('productDescription')?.invalid && productForm.get('productDescription')?.touched" class="error-message">
+          A descrição do produto é obrigatória
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="reset-button" (click)="resetForm()">Limpar</button>
+        <button type="submit" class="generate-button" [disabled]="!productForm.valid">Gerar Texto de Vendas</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="result-container" *ngIf="isLoading || generatedDescription">
+    <h2>Texto de Vendas Gerado</h2>
+    
+    <div class="loading-indicator" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Gerando descrição...</p>
+    </div>
+    
+    <div class="description-result" *ngIf="generatedDescription && !isLoading">
+      <pre>{{ generatedDescription }}</pre>
+      <button class="copy-button" (click)="copyToClipboard()">
+        <span class="copy-icon">📋</span> Copiar
+      </button>
+    </div>
+  </div>
+</div>
